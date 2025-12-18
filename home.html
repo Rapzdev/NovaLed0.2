@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>NovaLed | Home</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header>
+  <h1>NovaLed</h1>
+  <div class="nav">
+    <button onclick="goProfile()">Profile</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<section class="upload-box">
+  <input type="file" id="fileInput" accept="image/*,video/*">
+  <textarea id="caption" placeholder="Tulis kapsyen..."></textarea>
+  <button onclick="uploadPost()">Post</button>
+</section>
+
+<section id="feed" class="feed"></section>
+
+<script type="module" src="js/home.js"></script>
+</body>
+</html>
