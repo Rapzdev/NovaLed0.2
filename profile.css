@@ -1,0 +1,103 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  updatePassword
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* 🔥 Firebase */
+const firebaseConfig = {
+  apiKey: "AIzaSyDbV5HqTM0NRBaUbV2sVC7rzk-Gxk9Ua8s",
+  authDomain: "novaled-8a25b.firebaseapp.com",
+  projectId: "novaled-8a25b",
+  storageBucket: "novaled-8a25b.firebasestorage.app",
+  messagingSenderId: "388507009182",
+  appId: "1:388507009182:web:2ef38dbf0518260305fb8f",
+  measurementId: "G-FTRZ7Q2SXM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let userRef;
+let userData;
+
+/* 🚫 Emoji check */
+function hasEmoji(text) {
+  return /[\u{1F300}-\u{1FAFF}]/u.test(text);
+}
+
+/* 🔐 LOAD PROFILE */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+  userData = snap.data();
+
+  document.getElementById("username").innerText = userData.username;
+  document.getElementById("email").innerText = userData.email;
+  document.getElementById("profilePic").src =
+    userData.profilePic || "https://via.placeholder.com/120";
+});
+
+/* 🖼️ TUKAR PROFILE PIC */
+window.changePic = function () {
+  const file = document.getElementById("picInput").files[0];
+  if (!file) return alert("Pilih gambar");
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    await updateDoc(userRef, {
+      profilePic: reader.result
+    });
+    document.getElementById("profilePic").src = reader.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+/* ✏️ TUKAR USERNAME */
+window.changeUsername = async function () {
+  let newUsername = document.getElementById("newUsername").value.trim();
+  if (!newUsername) return alert("Username kosong");
+
+  if (userData.role !== "owner" && hasEmoji(newUsername)) {
+    alert("User biasa tak boleh guna emoji");
+    return;
+  }
+
+  if (userData.role === "owner" && !newUsername.includes("🪬")) {
+    newUsername += " 🪬";
+  }
+
+  await updateDoc(userRef, { username: newUsername });
+  document.getElementById("username").innerText = newUsername;
+  alert("Username berjaya ditukar");
+};
+
+/* 🔐 TUKAR PASSWORD */
+window.changePassword = async function () {
+  const newPass = document.getElementById("newPassword").value;
+  if (newPass.length < 6) {
+    alert("Password minimum 6 aksara");
+    return;
+  }
+
+  await updatePassword(auth.currentUser, newPass);
+  alert("Password berjaya ditukar");
+};
+
+/* 🔁 NAV */
+window.goHome = () => window.location.href = "home.html";
+window.logout = () => signOut(auth);
