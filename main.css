@@ -1,0 +1,79 @@
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background: #111;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  color: #00ffff;
+}
+
+.nav button {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.upload-box {
+  padding: 10px;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload-box textarea {
+  resize: none;
+  height: 60px;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.upload-box button {
+  background: #00ffff;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.feed {
+  padding: 10px;
+}
+
+.post {
+  background: #111;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.post-header {
+  padding: 8px;
+  font-weight: bold;
+}
+
+.post img,
+.post video {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+}
+
+.post .caption {
+  padding: 8px;
+  font-size: 14px;
+  color: #ddd;
+}
