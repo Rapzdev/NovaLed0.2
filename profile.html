@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>NovaLed | Profile</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header>
+  <h1>Profile</h1>
+  <div class="nav">
+    <button onclick="goHome()">Home</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<section class="profile-box">
+  <img id="profilePic" class="profile-pic" src="" alt="Profile">
+  <h2 id="username"></h2>
+  <p id="email"></p>
+</section>
+
+<section class="edit-box">
+  <h3>Edit Profile</h3>
+
+  <input type="file" id="picInput" accept="image/*">
+  <button onclick="changePic()">Tukar Gambar</button>
+
+  <input type="text" id="newUsername" placeholder="Username baru">
+  <button onclick="changeUsername()">Tukar Username</button>
+
+  <input type="password" id="newPassword" placeholder="Password baru">
+  <button onclick="changePassword()">Tukar Password</button>
+</section>
+
+<script type="module" src="js/profile.js"></script>
+</body>
+</html>
